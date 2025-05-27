@@ -1,0 +1,15 @@
+:root {
+  
+  &.light {
+    background-color: black;
+  }
+
+  :root.dark {
+    background-color: red;
+  }
+
+  --layout-mobile: 375px;
+  --layout-desktop: 1440px;
+
+  --ff-base: 'Nunito Sans', sans-serif;
+}
