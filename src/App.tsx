@@ -3,6 +3,9 @@ import './App.css';
 import HomePage from './pages/HomePage';
 import CountryDetail from './pages/CountryDetail';
 import Layout from './components/Layout';
+import { useSelector } from 'react-redux';
+import type { RootState } from './app/store';
+import { useEffect } from 'react';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +25,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const mode = useSelector((state: RootState) => state.theme.mode);
+  useEffect(() => {
+    document.documentElement.classList.remove('light','dark')
+    document.documentElement.classList.add(mode);
+  }, [mode]);
   return <RouterProvider router={router} />;
 }
 

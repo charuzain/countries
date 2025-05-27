@@ -1,7 +1,10 @@
-import  { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../app/store';
 import { fetchCountries } from '../slice/countrySlice';
+import SearchBar from '../components/SearchBar';
+import Filter from '../components/Filter';
+import CountryList from '../components/CountryList';
 
 const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,7 +28,9 @@ const HomePage = () => {
   }
   return (
     <>
-      <h1>Country List</h1>
+      <SearchBar />
+      <Filter />
+      <CountryList />
     </>
   );
 };
