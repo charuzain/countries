@@ -1,11 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import type { PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 // import type { AppDispatch, RootState } from '../app/store';
 
 type Status = 'idle' | 'loading' | 'error';
 type Country = {
   name: string;
   population: number;
+  region: string;
+  capital: string[];
+  flag: string;
 };
 
 export interface CountryState {
@@ -68,10 +71,13 @@ const countrySlice = createSlice({
       .addCase(fetchCountries.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchCountries.fulfilled, (state, action) => {
-        state.data = action.payload;
-        state.status = 'idle';
-      })
+      .addCase(
+        fetchCountries.fulfilled,
+        (state, action: PayloadAction<Country[]>) => {
+          state.data = action.payload;
+          state.status = 'idle';
+        }
+      )
       .addCase(fetchCountries.rejected, (state) => {
         state.status = 'error';
       });
@@ -85,7 +91,21 @@ export const fetchCountries = createAsyncThunk<Country[]>(
   async () => {
     const res = await fetch('https://restcountries.com/v3.1/all');
     const data = await res.json();
-    return data;
+    console.log(data);
+    console.log(data[0]);
+
+    console.log(data[0].flags);
+    console.log(typeof data);
+    const countryData: Country[] = data.map(
+      (country: any): Country => ({
+        name: country.name.common,
+        population: country.population,
+        region: country.region,
+        capital: country.capital,
+        flag: country.flags.png,
+      })
+    );
+    return countryData;
   }
 );
 
