@@ -21,12 +21,12 @@ const Header = () => {
 
   return (
     <header className={styles['header']}>
-      <p>Where in the world ?</p>
-      <div>
-        <button onClick={themeHandler}>
+      <p className={styles['header-title']}>Where in the world ?</p>
+      <div className={styles['theme-container']}>
+        <div onClick={themeHandler}>
           {mode === 'light' ? <FaMoon /> : <FaRegMoon />}
-          <span>{mode === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
-        </button>
+        </div>
+        <span className={styles['theme']}>{mode === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
       </div>
     </header>
   );

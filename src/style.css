@@ -14,8 +14,10 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  font-family: var(--ff-base);
+  background-color: var(--clr-background-body);
+  color: var(--clr-text);
   /* border: 2px solid purple; */
-
 }
 img,
 picture,

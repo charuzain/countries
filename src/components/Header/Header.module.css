@@ -1,3 +1,30 @@
-.header{
-  /* background-color: yellow; */
+.header {
+  background-color: var(--clr-background-header);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: var(--clr-text);
+  padding: 1rem;
+  align-items: center;
+  box-shadow: var(--box-shadow-header);
+}
+
+.header-title {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 20px;
+}
+
+.theme-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+.theme {
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 100%;
+  letter-spacing: 0px;
 }
