@@ -11,7 +11,7 @@
     /* Text */
     --clr-text: hsla(200, 15%, 8%, 1);
     --clr-search: hsla(0, 0%, 77%, 1);
-
+    --clr-btn: hsla(200, 15%, 8%, 1);
     /* Box shadow color */
     --box-shadow-header: 0px 2px 4px 0px hsla(0, 0%, 0%, 0.06);
 
@@ -19,9 +19,8 @@
 
     --box-shadow-card: 0px 0px 7px 2px hsla(0, 0%, 0%, 0.03);
 
-    
-     /* Icon */
-     --icon-fill: hsla(0, 0%, 70%, 1);
+    /* Icon */
+    --icon-fill: hsla(0, 0%, 70%, 1);
   }
 
   &.dark {
@@ -31,7 +30,6 @@
     --clr-background-dropdown: hsla(209, 23%, 22%, 1);
 
     --clr-background-secondary: hsla(209, 23%, 22%, 1);
-
 
     /* Text */
     --clr-text: hsla(0, 0%, 100%, 1);
@@ -50,14 +48,12 @@
 
     --clr-search: hsla(0, 0%, 100%, 1);
 
-
-
-
+    --clr-btn: hsla(0, 0%, 100%, 1);
   }
 
   --layout-mobile: 375px;
   --layout-desktop: 1440px;
 
   --ff-base: 'Nunito Sans', sans-serif;
-  --fs-small :12px;
+  --fs-small: 12px;
 }

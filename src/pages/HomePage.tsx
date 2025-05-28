@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../app/store';
 import { fetchCountries } from '../slice/countrySlice';
 import SearchBar from '../components/SearchBar/SearchBar';
-import Filter from '../components/Filter';
+import Filter from '../components/Filter/Filter';
 import CountryList from '../components/CountryList';
 
 const HomePage = () => {
