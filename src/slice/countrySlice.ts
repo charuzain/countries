@@ -14,11 +14,13 @@ type Country = {
 export interface CountryState {
   data: Country[];
   status: Status;
+  filteredData: Country[];
 }
 
 const initialState: CountryState = {
   data: [],
   status: 'idle',
+  filteredData: [],
 };
 
 // const countrySlice = createSlice({
@@ -58,6 +60,17 @@ const countrySlice = createSlice({
   name: 'country',
   initialState,
   reducers: {
+    filterCountries: (state, action: PayloadAction<string>) => {
+      const filter = action.payload.toLowerCase();
+
+      if (filter === 'all') {
+        state.filteredData = state.data;
+      } else {
+        state.filteredData = state.data.filter(
+          (country) => country.region.toLowerCase() === filter
+        );
+      }
+    },
     // setCountry(state, action) {
     //   state.data = action.payload;
     // },
@@ -75,6 +88,7 @@ const countrySlice = createSlice({
         fetchCountries.fulfilled,
         (state, action: PayloadAction<Country[]>) => {
           state.data = action.payload;
+          state.filteredData = action.payload;
           state.status = 'idle';
         }
       )
@@ -109,5 +123,5 @@ export const fetchCountries = createAsyncThunk<Country[]>(
   }
 );
 
-// export const { setCountry, setStatus } = countrySlice.actions;
+export const { filterCountries } = countrySlice.actions;
 export default countrySlice.reducer;

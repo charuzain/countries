@@ -4,8 +4,10 @@ import CountryCard from '../CountryCard/CountryCard';
 import styles from './CountryList.module.css';
 
 const CountryList = () => {
-  const { data, status } = useSelector((state: RootState) => state.country);
-  console.log(data);
+  const { filteredData: data, status } = useSelector(
+    (state: RootState) => state.country
+  );
+
   if (status === 'loading') {
     return <h1>Loading....</h1>;
   }

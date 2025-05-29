@@ -4,16 +4,14 @@ import type { RootState, AppDispatch } from '../app/store';
 import { fetchCountries } from '../slice/countrySlice';
 import SearchBar from '../components/SearchBar/SearchBar';
 import Filter from '../components/Filter/Filter';
-import CountryList from '../components/CountryList';
+import CountryList from '../components/CountryList/CountryList';
 
 const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { data: countryData, status } = useSelector(
+  const { status } = useSelector(
     (state: RootState) => state.country
   );
-  console.log(countryData);
-  console.log(status);
 
   useEffect(() => {
     dispatch(fetchCountries());
