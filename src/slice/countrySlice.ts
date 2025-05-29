@@ -11,11 +11,34 @@ type Country = {
   flag: string;
 };
 
+type Currency = {
+  symbol: string;
+  name: string;
+};
+
+type Currencies = {
+  [code: string]: Currency;
+};
+
+type CountryDetail = {
+  name: { common: string };
+  flags: { png: string };
+  population: number;
+  region: string;
+  subregion: string;
+  capital: string[];
+  flag: string;
+  tld: string;
+  languages: Record<string, string>;
+  borders: string[];
+  currencies: Currencies;
+};
+
 export interface CountryState {
   data: Country[];
   status: Status;
   filteredData: Country[];
-  selectedCountry?: Country | null;
+  selectedCountry?: CountryDetail[] | null;
 }
 
 const initialState: CountryState = {
@@ -132,8 +155,10 @@ export const fetchCountries = createAsyncThunk<Country[]>(
 
 export const fetchCountryByName = createAsyncThunk(
   'countryByName',
-  async (name:string) => {
-    const response = await fetch(`https://restcountries.com/v3.1/name/${name}`);
+  async (name: string) => {
+    const response = await fetch(
+      `https://restcountries.com/v3.1/name/${name}?fullText=true`
+    );
     const data = response.json();
 
     console.log(data);
