@@ -15,12 +15,14 @@ export interface CountryState {
   data: Country[];
   status: Status;
   filteredData: Country[];
+  selectedCountry?: Country | null;
 }
 
 const initialState: CountryState = {
   data: [],
   status: 'idle',
   filteredData: [],
+  selectedCountry: null,
 };
 
 // const countrySlice = createSlice({
@@ -94,6 +96,16 @@ const countrySlice = createSlice({
       )
       .addCase(fetchCountries.rejected, (state) => {
         state.status = 'error';
+      })
+      .addCase(fetchCountryByName.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchCountryByName.fulfilled, (state, action) => {
+        state.selectedCountry = action.payload;
+        state.status = 'idle';
+      })
+      .addCase(fetchCountryByName.rejected, (state) => {
+        state.status = 'error';
       });
   },
 });
@@ -105,11 +117,6 @@ export const fetchCountries = createAsyncThunk<Country[]>(
   async () => {
     const res = await fetch('https://restcountries.com/v3.1/all');
     const data = await res.json();
-    console.log(data);
-    console.log(data[0]);
-
-    console.log(data[0].flags);
-    console.log(typeof data);
     const countryData: Country[] = data.map(
       (country: any): Country => ({
         name: country.name.common,
@@ -120,6 +127,17 @@ export const fetchCountries = createAsyncThunk<Country[]>(
       })
     );
     return countryData;
+  }
+);
+
+export const fetchCountryByName = createAsyncThunk(
+  'countryByName',
+  async (name:string) => {
+    const response = await fetch(`https://restcountries.com/v3.1/name/${name}`);
+    const data = response.json();
+
+    console.log(data);
+    return data;
   }
 );
 
