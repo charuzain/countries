@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../app/store';
 import { useEffect } from 'react';
 import { fetchCountries, fetchCountryByName } from '../slice/countrySlice';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Link } from 'react-router';
 
 const CountryDetail = () => {
   const { name } = useParams<{ name: string }>();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -14,6 +15,7 @@ const CountryDetail = () => {
     selectedCountry,
     status,
     data: countryData,
+    error
   } = useSelector((state: RootState) => state.country);
 
   useEffect(() => {
@@ -26,6 +28,11 @@ const CountryDetail = () => {
     }
   }, [dispatch, name]);
 
+
+  const backHandler = () => {
+    navigate('/');
+  };
+
   const neighbourName = (borders: string[]): string[] => {
     return borders
       .map(
@@ -37,13 +44,27 @@ const CountryDetail = () => {
   if (status === 'loading') {
     return <p>Loading....</p>;
   }
+ 
+if (status === 'error') {
+  return (
+    <div>
+      <p>{error || 'Error loading country data.'}</p>
+      <button onClick={() => navigate('/')}>Go Back</button>
+    </div>
+  );
+}
 
+
+
+
+console.log(selectedCountry)
   return (
     <>
+      <button onClick={backHandler}>Back</button>
       <div>
         <img
           src={selectedCountry?.[0]?.flags?.png}
-          alt={`Flig of ${selectedCountry?.[0]?.name?.common}`}
+          alt={`Flag of ${selectedCountry?.[0]?.name?.common}`}
         />
       </div>
       <p>{selectedCountry?.[0]?.name?.common}</p>

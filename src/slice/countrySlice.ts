@@ -48,6 +48,7 @@ export interface CountryState {
   status: Status;
   filteredData: Country[];
   selectedCountry?: CountryDetail[] | null;
+  error: string | null;
 }
 
 const initialState: CountryState = {
@@ -55,6 +56,7 @@ const initialState: CountryState = {
   status: 'idle',
   filteredData: [],
   selectedCountry: null,
+  error: null,
 };
 
 const countrySlice = createSlice({
@@ -78,6 +80,7 @@ const countrySlice = createSlice({
     builder
       .addCase(fetchCountries.pending, (state) => {
         state.status = 'loading';
+        state.error = null;
       })
       .addCase(
         fetchCountries.fulfilled,
@@ -92,13 +95,17 @@ const countrySlice = createSlice({
       })
       .addCase(fetchCountryByName.pending, (state) => {
         state.status = 'loading';
+        state.error = null;
       })
       .addCase(fetchCountryByName.fulfilled, (state, action) => {
-        state.selectedCountry = action.payload;
         state.status = 'idle';
+        state.selectedCountry = action.payload;
+        state.error = null;
       })
-      .addCase(fetchCountryByName.rejected, (state) => {
+      .addCase(fetchCountryByName.rejected, (state, action) => {
         state.status = 'error';
+        state.selectedCountry = null;
+        state.error = action.payload as string;
       });
   },
 });
@@ -125,12 +132,22 @@ export const fetchCountries = createAsyncThunk<Country[]>(
 
 export const fetchCountryByName = createAsyncThunk(
   'countryByName',
-  async (name: string) => {
-    const response = await fetch(
-      `https://restcountries.com/v3.1/name/${name}?fullText=true`
-    );
-    const data = response.json();
-    return data;
+  async (name: string, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `https://restcountries.com/v3.1/name/${name}?fullText=true`
+      );
+      if (!response.ok) {
+        return rejectWithValue(`Country "${name}" not found`);
+        // this tells Redux Toolkit to dispatch the rejected action with error message as the payload.
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue('Something went wrong');
+    }
   }
 );
 
