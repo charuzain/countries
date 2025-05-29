@@ -1,39 +1,60 @@
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../app/store';
 import { useEffect } from 'react';
-import { fetchCountryByName } from '../slice/countrySlice';
+import { fetchCountries, fetchCountryByName } from '../slice/countrySlice';
 import { useParams } from 'react-router';
+import { Link } from 'react-router';
 
 const CountryDetail = () => {
   const { name } = useParams<{ name: string }>();
+
   const dispatch = useDispatch<AppDispatch>();
-  const { selectedCountry, status } = useSelector(
-    (state: RootState) => state.country
-  );
 
-  console.log(selectedCountry);
-  console.log(selectedCountry?.[0]?.name);
-  console.log(selectedCountry?.[0]?.name?.common);
-
-  // const lang = selectedCountry?.[0]?.languages;
-  // const values = Object.values(lang);
-  // console.log(values);
+  const {
+    selectedCountry,
+    status,
+    data: countryData,
+  } = useSelector((state: RootState) => state.country);
 
   useEffect(() => {
     if (name) {
       dispatch(fetchCountryByName(name));
     }
+
+    if (countryData.length === 0) {
+      dispatch(fetchCountries());
+    }
   }, [dispatch, name]);
+
+  const neighbourName = (borders: string[]): string[] => {
+    return borders
+      .map(
+        (border) => countryData.find((country) => country.cca3 === border)?.name
+      )
+      .filter((name): name is string => Boolean(name));
+  };
+
+  if (status === 'loading') {
+    return <p>Loading....</p>;
+  }
 
   return (
     <>
       <div>
-        <img src={selectedCountry?.[0]?.flags?.png} alt="" />
+        <img
+          src={selectedCountry?.[0]?.flags?.png}
+          alt={`Flig of ${selectedCountry?.[0]?.name?.common}`}
+        />
       </div>
       <p>{selectedCountry?.[0]?.name?.common}</p>
 
       <div>
-        <p>Native Name:</p>
+        <p>
+          Native Name:{' '}
+          {selectedCountry?.[0]?.name?.nativeName &&
+            Object.values(selectedCountry[0].name.nativeName)[0]?.common}
+        </p>
+
         <p>
           Population <span>{selectedCountry?.[0]?.population}</span>
         </p>
@@ -55,7 +76,7 @@ const CountryDetail = () => {
           Currencies :{' '}
           {selectedCountry?.[0]?.currencies
             ? Object.values(selectedCountry?.[0]?.currencies).map((c) => (
-                <span>{c.name}</span>
+                <span key={c.name}>{c.name}</span>
               ))
             : null}
         </p>
@@ -71,9 +92,15 @@ const CountryDetail = () => {
       <div>
         <p>Border Countries</p>
         <ul>
-          {selectedCountry?.[0]?.borders.map((border) => (
-            <li>{border}</li>
-          ))}
+          {selectedCountry?.[0]?.borders
+            ? neighbourName(selectedCountry?.[0]?.borders).map(
+                (border, index) => (
+                  <li key={index}>
+                    <Link to={`/${border}`}>{border}</Link>
+                  </li>
+                )
+              )
+            : null}
         </ul>
       </div>
     </>

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-// import type { AppDispatch, RootState } from '../app/store';
 
 type Status = 'idle' | 'loading' | 'error';
 type Country = {
@@ -9,6 +8,7 @@ type Country = {
   region: string;
   capital: string[];
   flag: string;
+  cca3: string;
 };
 
 type Currency = {
@@ -20,8 +20,17 @@ type Currencies = {
   [code: string]: Currency;
 };
 
+type Native = {
+  official: string;
+  common: string;
+};
+
+type NativeName = {
+  [languageCode: string]: Native;
+};
+
 type CountryDetail = {
-  name: { common: string };
+  name: { common: string; nativeName: NativeName };
   flags: { png: string };
   population: number;
   region: string;
@@ -48,39 +57,6 @@ const initialState: CountryState = {
   selectedCountry: null,
 };
 
-// const countrySlice = createSlice({
-//   name: 'country',
-//   initialState,
-//   reducers: {
-//     setCountry(state, action) {
-//       state.data = action.payload;
-//     },
-//     setStatus(state, action: PayloadAction<Status>) {
-//       state.status = action.payload;
-//     },
-//   },
-// });
-
-// THUNKS
-
-// export const fetchCountries = () => {
-//   return async function countryThunk(
-//     dispatch: AppDispatch,
-//     getState:() => RootState
-//   ) {
-//     dispatch(setStatus('loading'));
-//     try {
-//       const res = await fetch('https://restcountries.com/v3.1/all');
-//       const data = await res.json();
-//       dispatch(setCountry(data));
-//       dispatch(setStatus('idle'));
-//     } catch (error) {
-//       console.log(error);
-//       dispatch(setStatus('error'));
-//     }
-//   };
-// };
-
 const countrySlice = createSlice({
   name: 'country',
   initialState,
@@ -96,12 +72,6 @@ const countrySlice = createSlice({
         );
       }
     },
-    // setCountry(state, action) {
-    //   state.data = action.payload;
-    // },
-    // setStatus(state, action: PayloadAction<Status>) {
-    //   state.status = action.payload;
-    // },
   },
 
   extraReducers: (builder) => {
@@ -133,13 +103,12 @@ const countrySlice = createSlice({
   },
 });
 
-//second way using createasyncthunk method for better error handling ,  first parameter is identifier , second is async function.
-
 export const fetchCountries = createAsyncThunk<Country[]>(
   'country/fetch',
   async () => {
     const res = await fetch('https://restcountries.com/v3.1/all');
     const data = await res.json();
+    // console.log(data);
     const countryData: Country[] = data.map(
       (country: any): Country => ({
         name: country.name.common,
@@ -147,6 +116,7 @@ export const fetchCountries = createAsyncThunk<Country[]>(
         region: country.region,
         capital: country.capital,
         flag: country.flags.png,
+        cca3: country.cca3,
       })
     );
     return countryData;
@@ -160,8 +130,6 @@ export const fetchCountryByName = createAsyncThunk(
       `https://restcountries.com/v3.1/name/${name}?fullText=true`
     );
     const data = response.json();
-
-    console.log(data);
     return data;
   }
 );
