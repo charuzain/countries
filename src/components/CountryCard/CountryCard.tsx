@@ -1,4 +1,4 @@
-import React from 'react';
+import styles from './CoountryCard.module.css';
 
 const CountryCard = ({
   name,
@@ -14,15 +14,24 @@ const CountryCard = ({
   flag: string;
 }) => {
   return (
-    <li>
-      <div>
-        <img src={flag} alt={`${name} flag`} />
+    <li className={styles['country-card']}>
+      <div className={styles['image-box']}>
+        <img src={flag} alt={`${name} flag`} className={styles['image']} />
       </div>
-      <div>
-        <p> Name:{name}</p>
-        <p>Population{population}</p>
-        <p>Region{region}</p>
-        <p>Capital{capital}</p>
+      <p className={styles['country-name']}>{name}</p>
+      <div className={styles['country-details']}>
+        <p className={styles['country-detail-label']}>
+          Population:
+          <span className={styles['country-info']}>   {population}</span>
+        </p>
+        <p className={styles['country-detail-label']}>
+          Region:
+          <span className={styles['country-info']}> {region}</span>
+        </p>
+        <p className={styles['country-detail-label']}>
+          Capital:
+          <span className={styles['country-info']}> {capital}</span>
+        </p>
       </div>
     </li>
   );
