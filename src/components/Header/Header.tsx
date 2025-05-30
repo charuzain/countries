@@ -10,7 +10,6 @@ const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { mode } = useSelector((state: RootState) => state.theme);
-  console.log(mode);
 
   const themeHandler = () => {
     if (mode === 'light') {
