@@ -7,6 +7,7 @@
     --clr-background-dropdown: hsla(0, 0%, 100%, 1);
     --clr-background-card: hsla(0, 0%, 100%, 1);
     --clr-background-secondary: hsla(0, 0%, 100%, 1);
+    --clr-background-btn: hsla(0, 0%, 100%, 1);
 
     /* Text */
     --clr-text: hsla(200, 15%, 8%, 1);
@@ -18,6 +19,9 @@
     --box-shadow-dropdown: 0px 2px 9px 0px hsla(0, 0%, 0%, 0.05);
 
     --box-shadow-card: 0px 0px 7px 2px hsla(0, 0%, 0%, 0.03);
+
+    --box-shadow-btn: 0px 0px 7px 0px hsla(0, 0%, 0%, 0.29);
+
 
     /* Icon */
     --icon-fill: hsla(0, 0%, 70%, 1);
@@ -31,6 +35,8 @@
 
     --clr-background-secondary: hsla(209, 23%, 22%, 1);
 
+
+    --clr-background-btn: hsla(209, 23%, 22%, 1);
     --clr-background-card: hsla(209, 23%, 22%, 1);
     /* Text */
     --clr-text: hsla(0, 0%, 100%, 1);
@@ -44,6 +50,9 @@
 
     --box-shadow-input: 0px 2px 9px 0px hsla(0, 0%, 0%, 0.05);
 
+    --box-shadow-btn: 0px 0px 7px 0px hsla(0, 0%, 0%, 0.29);
+
+
     /* icon */
     --icon-fill: hsla(0, 0%, 100%, 1);
 
@@ -51,6 +60,8 @@
 
     --clr-btn: hsla(0, 0%, 100%, 1);
   }
+
+  --btn-radius: 2px;
 
   --layout-mobile: 375px;
   --layout-desktop: 1440px;

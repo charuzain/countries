@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../app/store';
 import { setTheme } from '../../slice/themeSlice';
 import styles from '../Header/Header.module.css';
+import { Link } from 'react-router';
 
 const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,7 +22,7 @@ const Header = () => {
 
   return (
     <header className={styles['header']}>
-      <p className={styles['header-title']}>Where in the world ?</p>
+      <Link to={ '/'} className={styles['header-title']}>Where in the world ?</Link>
       <div className={styles['theme-container']}>
         <div onClick={themeHandler}>
           {mode === 'light' ? <FaMoon /> : <FaRegMoon />}

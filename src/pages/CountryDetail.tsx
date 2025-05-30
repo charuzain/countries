@@ -1,21 +1,30 @@
+// Hooks Import
+import { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router';
+
+// Redux Imports
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../app/store';
-import { useEffect } from 'react';
 import { fetchCountries, fetchCountryByName } from '../slice/countrySlice';
-import { useNavigate, useParams } from 'react-router';
-import { Link } from 'react-router';
+
+// Components Import
+import BorderCountries from '../components/BorderCountries/BorderCountries';
+import BackButton from '../components/BackButton/BackButton';
+import CountryFlag from '../components/CountryFlag/CountryFlag';
+import CountryInfo from '../components/CountryInfo/CountryInfo';
+import CountryMetaInfo from '../components/CountryMetaInfo/CountryMetaInfo';
 
 const CountryDetail = () => {
   const { name } = useParams<{ name: string }>();
-  const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const {
     selectedCountry,
     status,
     data: countryData,
-    error
+    error,
   } = useSelector((state: RootState) => state.country);
 
   useEffect(() => {
@@ -28,101 +37,39 @@ const CountryDetail = () => {
     }
   }, [dispatch, name]);
 
-
-  const backHandler = () => {
-    navigate('/');
-  };
-
-  const neighbourName = (borders: string[]): string[] => {
-    return borders
-      .map(
-        (border) => countryData.find((country) => country.cca3 === border)?.name
-      )
-      .filter((name): name is string => Boolean(name));
-  };
-
   if (status === 'loading') {
     return <p>Loading....</p>;
   }
- 
-if (status === 'error') {
-  return (
-    <div>
-      <p>{error || 'Error loading country data.'}</p>
-      <button onClick={() => navigate('/')}>Go Back</button>
-    </div>
-  );
-}
 
+  if (status === 'error') {
+    return (
+      <div>
+        <p>{error || 'Error loading country data.'}</p>
+        <button onClick={() => navigate('/')}>Go Back</button>
+      </div>
+    );
+  }
 
-
-
-console.log(selectedCountry)
   return (
     <>
-      <button onClick={backHandler}>Back</button>
-      <div>
-        <img
-          src={selectedCountry?.[0]?.flags?.png}
-          alt={`Flag of ${selectedCountry?.[0]?.name?.common}`}
-        />
-      </div>
-      <p>{selectedCountry?.[0]?.name?.common}</p>
+      <BackButton />
+      <CountryFlag
+        flag={selectedCountry?.[0]?.flags?.png}
+        name={selectedCountry?.[0]?.name?.common}
+      />
+      {selectedCountry?.[0] && (
+        <CountryInfo selectedCountry={selectedCountry[0]} />
+      )}
 
-      <div>
-        <p>
-          Native Name:{' '}
-          {selectedCountry?.[0]?.name?.nativeName &&
-            Object.values(selectedCountry[0].name.nativeName)[0]?.common}
-        </p>
-
-        <p>
-          Population <span>{selectedCountry?.[0]?.population}</span>
-        </p>
-        <p>
-          Region <span>{selectedCountry?.[0]?.region}</span>
-        </p>
-        <p>
-          Sub Region <span>{selectedCountry?.[0]?.subregion}</span>
-        </p>
-        <p>
-          Capital <span>{selectedCountry?.[0]?.capital}</span>
-        </p>
-      </div>
-      <div>
-        <p>
-          Top level domain <span>{selectedCountry?.[0]?.tld}</span>
-        </p>
-        <p>
-          Currencies :{' '}
-          {selectedCountry?.[0]?.currencies
-            ? Object.values(selectedCountry?.[0]?.currencies).map((c) => (
-                <span key={c.name}>{c.name}</span>
-              ))
-            : null}
-        </p>
-        <p>
-          Language:
-          {selectedCountry?.[0]?.languages
-            ? Object.values(selectedCountry?.[0]?.languages).map((lang) => (
-                <span key={lang}>{lang}</span>
-              ))
-            : null}
-        </p>
-      </div>
+      {selectedCountry?.[0] && (
+        <CountryMetaInfo country={selectedCountry?.[0]} />
+      )}
       <div>
         <p>Border Countries</p>
-        <ul>
-          {selectedCountry?.[0]?.borders
-            ? neighbourName(selectedCountry?.[0]?.borders).map(
-                (border, index) => (
-                  <li key={index}>
-                    <Link to={`/${border}`}>{border}</Link>
-                  </li>
-                )
-              )
-            : null}
-        </ul>
+        <BorderCountries
+          borders={selectedCountry?.[0]?.borders}
+          countryData={countryData}
+        />
       </div>
     </>
   );

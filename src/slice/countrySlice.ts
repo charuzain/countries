@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type Status = 'idle' | 'loading' | 'error';
-type Country = {
+export type Country = {
   name: string;
   population: number;
   region: string;
@@ -20,16 +20,16 @@ type Currencies = {
   [code: string]: Currency;
 };
 
-type Native = {
+export type Native = {
   official: string;
   common: string;
 };
 
-type NativeName = {
+export type NativeName = {
   [languageCode: string]: Native;
 };
 
-type CountryDetail = {
+export type CountryDetail = {
   name: { common: string; nativeName: NativeName };
   flags: { png: string };
   population: number;
