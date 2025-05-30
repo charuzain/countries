@@ -1,13 +1,21 @@
 .header {
   background-color: var(--clr-background-header);
+
+  color: var(--clr-text);
+  padding: 0.875rem 1rem;
+  align-items: center;
+  box-shadow: var(--box-shadow-header);
+}
+
+.header-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  /* border: 2px solid red; */
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  color: var(--clr-text);
-  padding: 1rem;
-  align-items: center;
-  box-shadow: var(--box-shadow-header);
-
+  padding: 1rem 0;
 }
 
 .header-title {
@@ -31,4 +39,19 @@
 
   line-height: 100%;
   letter-spacing: 0px;
+}
+
+@media only screen and (min-width: 1280px) {
+  .header-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .header-title {
+    font-size: 1.5rem;
+    line-height: 100%;
+  }
+  .theme {
+    font-size: 1rem;
+    line-height: 100%;
+  }
 }
