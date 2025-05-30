@@ -14,6 +14,10 @@ const CountryList = () => {
   if (status === 'error') {
     return <h1>There was an error loading this page....</h1>;
   }
+
+  if (data.length === 0) {
+    return <h2>No countries found.</h2>;
+  }
   return (
     <ul className={styles['country-list']}>
       {data.map((country) => (

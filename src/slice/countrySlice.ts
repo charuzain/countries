@@ -74,6 +74,14 @@ const countrySlice = createSlice({
         );
       }
     },
+    searchCountries: (state, action: PayloadAction<string>) => {
+      const searchTerm = action.payload.toLowerCase();
+      console.log(searchTerm);
+
+      state.filteredData = state.data.filter((country) =>
+        country.name.toLowerCase().startsWith(searchTerm)
+      );
+    },
   },
 
   extraReducers: (builder) => {
@@ -151,5 +159,5 @@ export const fetchCountryByName = createAsyncThunk(
   }
 );
 
-export const { filterCountries } = countrySlice.actions;
+export const { filterCountries, searchCountries } = countrySlice.actions;
 export default countrySlice.reducer;
