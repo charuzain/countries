@@ -1,0 +1,19 @@
+.back-btn{
+  border:none;
+  outline:none;
+  background-color: var(--clr-background-btn);
+  color:var(--clr-text);
+  box-shadow: var(--box-shadow-btn);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: .375rem 1.5rem ;
+  border-radius: var( --btn-radius);
+  cursor: pointer;
+  font-weight: 300;
+  font-size: .875rem;
+  line-height: 1.25rem;
+
+} 

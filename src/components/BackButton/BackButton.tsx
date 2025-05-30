@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import styles from './BackButton.module.css';
+import { BiArrowBack } from 'react-icons/bi';
 
 const BackButton = () => {
   const navigate = useNavigate();
@@ -8,6 +9,7 @@ const BackButton = () => {
   };
   return (
     <button onClick={backHandler} className={styles['back-btn']}>
+      <BiArrowBack />
       Back
     </button>
   );
