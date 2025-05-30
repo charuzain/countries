@@ -1,4 +1,5 @@
 import type { CountryDetail } from '../../slice/countrySlice';
+import styles from './CountryInfo.module.css';
 
 const CountryInfo = ({
   selectedCountry,
@@ -6,29 +7,37 @@ const CountryInfo = ({
   selectedCountry: CountryDetail;
 }) => {
   return (
-    <>
-      <p>{selectedCountry?.name?.common}</p>
-      <div>
-        <p>
+    <div className={styles['info-container']}>
+      <h1 className={styles['country-name']}>
+        {selectedCountry?.name?.common}
+      </h1>
+      <div className={styles['country-details']}>
+        <p className={styles['info-label']}>
           Native Name:{' '}
-          {selectedCountry?.name?.nativeName &&
-            Object.values(selectedCountry.name.nativeName)[0]?.common}
+          <span className={styles['info']}>
+            {selectedCountry?.name?.nativeName &&
+              Object.values(selectedCountry.name.nativeName)[0]?.common}
+          </span>
         </p>
 
-        <p>
-          Population <span>{selectedCountry?.population}</span>
+        <p className={styles['info-label']}>
+          Population:{' '}
+          <span className={styles['info']}>{selectedCountry?.population}</span>
         </p>
-        <p>
-          Region <span>{selectedCountry?.region}</span>
+        <p className={styles['info-label']}>
+          Region:
+          <span className={styles['info']}>{selectedCountry?.region}</span>
         </p>
-        <p>
-          Sub Region <span>{selectedCountry?.subregion}</span>
+        <p className={styles['info-label']}>
+          Sub Region:
+          <span className={styles['info']}>{selectedCountry?.subregion}</span>
         </p>
-        <p>
-          Capital <span>{selectedCountry?.capital}</span>
+        <p className={styles['info-label']}>
+          Capital:
+          <span className={styles['info']}>{selectedCountry?.capital}</span>
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
