@@ -5,8 +5,12 @@ interface Props {
 }
 const CountryFlag = ({ flag, name }: Props) => {
   return (
-    <div>
-      <img src={flag || ''} alt={`Flag of ${name || 'Country'}`} />
+    <div className={styles['flag-container']}>
+      <img
+        src={flag || ''}
+        alt={`Flag of ${name || 'Country'}`}
+        className={styles['flag']}
+      />
     </div>
   );
 };
