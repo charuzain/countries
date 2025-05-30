@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import type { Country } from '../../slice/countrySlice';
+import styles from './BorderCountries.module.css'
 
 const BorderCountries = ({
   countryData,
@@ -20,10 +21,12 @@ const BorderCountries = ({
     return <p>'No Neighbouring country found'</p>;
   }
   return (
-    <ul>
+    <ul className={styles['border-list']}>
       {neighbourName(borders).map((border, index) => (
-        <li key={index}>
-          <Link to={`/${border}`}>{border}</Link>
+        <li key={index} className={styles['border']}>
+          <Link to={`/${border}`} className={styles['border-link']}>
+            {border}
+          </Link>
         </li>
       ))}
     </ul>
