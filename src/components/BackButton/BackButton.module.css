@@ -18,3 +18,17 @@
   align-self: flex-start
 
 } 
+
+.btn-container{
+  max-width: 26.5625rem;
+  margin: 0 auto;
+  width: 100%;
+
+
+}
+
+@media only screen and (min-width: 768px) {
+  .btn-container {
+    max-width: 1280px;
+  }
+}

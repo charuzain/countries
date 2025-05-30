@@ -6,12 +6,13 @@ import SearchBar from '../components/SearchBar/SearchBar';
 import Filter from '../components/Filter/Filter';
 import CountryList from '../components/CountryList/CountryList';
 
+// css import
+import styles from './HomePage.module.css';
+
 const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { status } = useSelector(
-    (state: RootState) => state.country
-  );
+  const { status } = useSelector((state: RootState) => state.country);
 
   useEffect(() => {
     dispatch(fetchCountries());
@@ -25,11 +26,13 @@ const HomePage = () => {
     return <h1>Error..</h1>;
   }
   return (
-    <>
-      <SearchBar />
-      <Filter />
+    <main className={styles['main']}>
+      <div className={styles['filter-container']}>
+        <SearchBar />
+        <Filter />
+      </div>
       <CountryList />
-    </>
+    </main>
   );
 };
 

@@ -3,11 +3,30 @@
   max-width: 320px;
   width: 100%;
   height: 12.5rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   overflow: hidden;
 }
 
-.flag{
+.flag {
   height: 100%;
   width: 100%;
 }
+
+@media only screen and (min-width: 1024px) {
+  .flag-container {
+    max-width: 25rem;
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .flag-container {
+    max-width: 30rem;
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+  }
+}
+

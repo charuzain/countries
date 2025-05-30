@@ -60,19 +60,23 @@ const CountryDetail = () => {
           flag={selectedCountry?.[0]?.flags?.png}
           name={selectedCountry?.[0]?.name?.common}
         />
-        {selectedCountry?.[0] && (
-          <CountryInfo selectedCountry={selectedCountry[0]} />
-        )}
+        <div className={styles['detail-box']}>
+          <div className={styles['detail-top-box']}>
+            {selectedCountry?.[0] && (
+              <CountryInfo selectedCountry={selectedCountry[0]} />
+            )}
 
-        {selectedCountry?.[0] && (
-          <CountryMetaInfo country={selectedCountry?.[0]} />
-        )}
-        <div>
-          <p className={styles['border']}>Border Countries:</p>
-          <BorderCountries
-            borders={selectedCountry?.[0]?.borders}
-            countryData={countryData}
-          />
+            {selectedCountry?.[0] && (
+              <CountryMetaInfo country={selectedCountry?.[0]} />
+            )}
+          </div>
+          <div className={styles['detail-bottom-box']}>
+            <p className={styles['border']}>Border Countries:</p>
+            <BorderCountries
+              borders={selectedCountry?.[0]?.borders}
+              countryData={countryData}
+            />
+          </div>
         </div>
       </div>
     </main>

@@ -1,18 +1,15 @@
-.filter-container{
+.filter-container {
   width: 12.5rem;
   margin-left: 1rem;
   font-weight: 400;
   font-size: 0.85rem;
   position: relative;
-
 }
-
 
 .filter-btn {
   width: 100%;
   outline: none;
   border: none;
-  /* all: unset; */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -30,10 +27,9 @@
   cursor: pointer;
 
   /* padding: 2rem; */
-
 }
 
-.filter-list{
+.filter-list {
   position: absolute;
   width: 100%;
   /* border:2px solid red; */
@@ -46,9 +42,12 @@
   box-shadow: var(--box-shadow-dropdown);
   display: flex;
   flex-direction: column;
-  gap:0.6rem;
-  top:110%;
- 
+  gap: 0.6rem;
+  top: 110%;
+}
 
-
+@media only screen and (min-width: 768px) {
+  .filter-container {
+    font-size: 0.875rem;
+  }
 }

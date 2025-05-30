@@ -13,6 +13,7 @@
     --clr-text: hsla(200, 15%, 8%, 1);
     --clr-search: hsla(0, 0%, 77%, 1);
     --clr-btn: hsla(200, 15%, 8%, 1);
+    
     /* Box shadow color */
     --box-shadow-header: 0px 2px 4px 0px hsla(0, 0%, 0%, 0.06);
 
@@ -21,6 +22,9 @@
     --box-shadow-card: 0px 0px 7px 2px hsla(0, 0%, 0%, 0.03);
 
     --box-shadow-btn: 0px 0px 7px 0px hsla(0, 0%, 0%, 0.29);
+
+    --box-shadow-border: 0px 0px 4px 1px hsla(0, 0%, 0%, 0.1);
+
 
 
     /* Icon */
@@ -51,6 +55,9 @@
     --box-shadow-input: 0px 2px 9px 0px hsla(0, 0%, 0%, 0.05);
 
     --box-shadow-btn: 0px 0px 7px 0px hsla(0, 0%, 0%, 0.29);
+
+   --box-shadow-border: 0px 0px 4px 1px hsla(200, 15%, 8%, 0.25);
+
 
 
     /* icon */

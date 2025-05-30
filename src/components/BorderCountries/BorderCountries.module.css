@@ -23,3 +23,6 @@
 .border-link:hover {
   color: var(--clr-text);
 }
+@media only screen and (min-width: 1024px) {
+
+}

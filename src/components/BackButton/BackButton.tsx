@@ -8,10 +8,12 @@ const BackButton = () => {
     navigate('/');
   };
   return (
-    <button onClick={backHandler} className={styles['back-btn']}>
-      <BiArrowBack />
-      Back
-    </button>
+    <div className={styles['btn-container']}>
+      <button onClick={backHandler} className={styles['back-btn']}>
+        <BiArrowBack />
+        Back
+      </button>
+    </div>
   );
 };
 

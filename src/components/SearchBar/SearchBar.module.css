@@ -1,6 +1,7 @@
 .search {
   margin: 1rem;
   position: relative;
+  max-width: 21.4375rem;
 }
 .search-icon {
   position: absolute;
@@ -14,15 +15,29 @@
 .search-input {
   width: 100%;
   padding: 0.2rem 4.625rem;
-  /* padding: 0.2rem 3rem; */
   color: var(--clr-search);
   background-color: var(--clr-background-secondary);
   box-shadow: var(--box-shadow-input);
   border: none;
   border-radius: 5px;
   height: 3rem;
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-weight: 400;
   line-height: 20px;
   outline: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .search {
+    max-width: 30rem;
+    width: 100%;
+  }
+  .search-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  .search-input {
+    height: 3.5rem;
+    font-size: 0.875rem;
+  }
 }
