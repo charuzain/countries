@@ -49,6 +49,8 @@ export interface CountryState {
   filteredData: Country[];
   selectedCountry?: CountryDetail[] | null;
   error: string | null;
+  selectedFilter: string;
+  searchTerm: string;
 }
 
 const initialState: CountryState = {
@@ -57,6 +59,8 @@ const initialState: CountryState = {
   filteredData: [],
   selectedCountry: null,
   error: null,
+  selectedFilter: 'all',
+  searchTerm: '',
 };
 
 const countrySlice = createSlice({
@@ -64,23 +68,34 @@ const countrySlice = createSlice({
   initialState,
   reducers: {
     filterCountries: (state, action: PayloadAction<string>) => {
-      const filter = action.payload.toLowerCase();
+      state.selectedFilter = action.payload.toLowerCase();
 
-      if (filter === 'all') {
-        state.filteredData = state.data;
-      } else {
-        state.filteredData = state.data.filter(
-          (country) => country.region.toLowerCase() === filter
+      state.filteredData = state.data
+        .filter((country) =>
+          state.selectedFilter === 'all'
+            ? true
+            : country.region.toLowerCase() === state.selectedFilter
+        )
+        .filter((country) =>
+          state.searchTerm
+            ? country.name.toLowerCase().startsWith(state.searchTerm)
+            : true
         );
-      }
     },
-    searchCountries: (state, action: PayloadAction<string>) => {
-      const searchTerm = action.payload.toLowerCase();
-      console.log(searchTerm);
 
-      state.filteredData = state.data.filter((country) =>
-        country.name.toLowerCase().startsWith(searchTerm)
-      );
+    searchCountries: (state, action: PayloadAction<string>) => {
+      state.searchTerm = action.payload.toLowerCase();
+      state.filteredData = state.data
+        .filter((country) =>
+          state.searchTerm
+            ? country.name.toLowerCase().startsWith(state.searchTerm)
+            : true
+        )
+        .filter((country) =>
+          state.selectedFilter === 'all'
+            ? true
+            : country.region.toLowerCase() === state.selectedFilter
+        );
     },
   },
 

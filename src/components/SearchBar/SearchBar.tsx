@@ -11,9 +11,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     const delay = setTimeout(() => {
-      if (search.trim()) {
-        dispatch(searchCountries(search));
-      }
+      dispatch(searchCountries(search));
     }, 400);
 
     return () => clearTimeout(delay);
