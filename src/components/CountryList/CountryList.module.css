@@ -1,5 +1,4 @@
 .country-list {
-  /* border:2px solid red; */
   padding: 1rem;
   margin-top: 1.5rem;
   display: flex;
@@ -14,8 +13,7 @@
     /* border:2px solid orange; */
     flex-direction: row;
     flex-wrap: wrap;
-    gap:3rem;
-    justify-content: space-between;
+    gap: 4rem;
+    justify-content: flex-start;
   }
 }
-

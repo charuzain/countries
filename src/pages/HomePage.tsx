@@ -8,6 +8,7 @@ import CountryList from '../components/CountryList/CountryList';
 
 // css import
 import styles from './HomePage.module.css';
+import Sort from '../components/Sort/Sort';
 
 const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -30,6 +31,7 @@ const HomePage = () => {
       <div className={styles['filter-container']}>
         <SearchBar />
         <Filter />
+        <Sort/>
       </div>
       <CountryList />
     </main>

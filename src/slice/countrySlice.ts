@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { act } from 'react';
 
 type Status = 'idle' | 'loading' | 'error';
 export type Country = {
@@ -51,6 +52,7 @@ export interface CountryState {
   error: string | null;
   selectedFilter: string;
   searchTerm: string;
+  sortBy: string;
 }
 
 const initialState: CountryState = {
@@ -61,7 +63,10 @@ const initialState: CountryState = {
   error: null,
   selectedFilter: 'all',
   searchTerm: '',
+  sortBy: '',
 };
+
+// helper
 
 const countrySlice = createSlice({
   name: 'country',
@@ -81,6 +86,26 @@ const countrySlice = createSlice({
             ? country.name.toLowerCase().startsWith(state.searchTerm)
             : true
         );
+
+      if (state.sortBy) {
+        if (state.sortBy === 'name-asc') {
+          state.filteredData = [...state.filteredData].sort((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+        } else if (state.sortBy === 'name-desc') {
+          state.filteredData = [...state.filteredData].sort((a, b) =>
+            b.name.localeCompare(a.name)
+          );
+        } else if (state.sortBy === 'pop-desc') {
+          state.filteredData = [...state.filteredData].sort(
+            (a, b) => b.population - a.population
+          );
+        } else {
+          state.filteredData = [...state.filteredData].sort(
+            (a, b) => a.population - b.population
+          );
+        }
+      }
     },
 
     searchCountries: (state, action: PayloadAction<string>) => {
@@ -96,6 +121,48 @@ const countrySlice = createSlice({
             ? true
             : country.region.toLowerCase() === state.selectedFilter
         );
+
+      if (state.sortBy) {
+        if (state.sortBy === 'name-asc') {
+          state.filteredData = [...state.filteredData].sort((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+        } else if (state.sortBy === 'name-desc') {
+          state.filteredData = [...state.filteredData].sort((a, b) =>
+            b.name.localeCompare(a.name)
+          );
+        } else if (state.sortBy === 'pop-desc') {
+          state.filteredData = [...state.filteredData].sort(
+            (a, b) => b.population - a.population
+          );
+        } else {
+          state.filteredData = [...state.filteredData].sort(
+            (a, b) => a.population - b.population
+          );
+        }
+      }
+    },
+
+    sortCountries: (state, action: PayloadAction<string>) => {
+      const countriesData = [...state.filteredData];
+      state.sortBy = action.payload;
+      if (action.payload === 'name-asc') {
+        state.filteredData = countriesData.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+      } else if (action.payload === 'name-desc') {
+        state.filteredData = countriesData.sort((a, b) =>
+          b.name.localeCompare(a.name)
+        );
+      } else if (action.payload === 'pop-desc') {
+        state.filteredData = countriesData.sort(
+          (a, b) => b.population - a.population
+        );
+      } else {
+        state.filteredData = countriesData.sort(
+          (a, b) => a.population - b.population
+        );
+      }
     },
   },
 
@@ -174,5 +241,6 @@ export const fetchCountryByName = createAsyncThunk(
   }
 );
 
-export const { filterCountries, searchCountries } = countrySlice.actions;
+export const { filterCountries, searchCountries, sortCountries } =
+  countrySlice.actions;
 export default countrySlice.reducer;
