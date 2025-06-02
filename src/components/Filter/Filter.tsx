@@ -40,6 +40,9 @@ const Filter = () => {
           <li onClick={() => filterSelectHandler('Africa')}>Africa</li>
           <li onClick={() => filterSelectHandler('Americas')}>Americas</li>
           <li onClick={() => filterSelectHandler('Asia')}>Asia</li>
+          <li onClick={() => filterSelectHandler('Antarctic')}>Antarctic</li>
+          <li onClick={() => filterSelectHandler('Oceania')}>Oceania</li>
+          <li onClick={() => filterSelectHandler('Europe')}>Europe</li>
         </ul>
       )}
     </div>

@@ -1,0 +1,22 @@
+.btn-container {
+  display: flex;
+  border: 2px solid orange;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn {
+  font-size: 0.875rem;
+  letter-spacing: 0.063rem;
+  line-height: 20px;
+  outline: none;
+  border: none;
+
+  /* color: white; */
+  cursor: pointer;
+  background-color: inherit;
+}
+
+.active {
+  background-color: red;
+}

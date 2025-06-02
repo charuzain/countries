@@ -15,12 +15,21 @@ const CountryList = () => {
     return <h1>There was an error loading this page....</h1>;
   }
 
+  let pageNum = 3;
+
+  const startIndex = (pageNum - 1) * 20;
+  const endIndex = pageNum * 20 - 1;
+  // console.log(startIndex)
+  // console.log(endIndex)
+
+  const elem = data.slice(startIndex, endIndex+1);
+
   if (data.length === 0) {
     return <h2>No countries found.</h2>;
   }
   return (
     <ul className={styles['country-list']}>
-      {data.map((country) => (
+      {elem.map((country) => (
         <CountryCard
           key={country.name}
           name={country.name}
