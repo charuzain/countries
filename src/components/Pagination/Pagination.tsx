@@ -3,11 +3,11 @@ import type { RootState } from '../../app/store';
 import styles from './Pagination.module.css';
 import type { AppDispatch } from '../../app/store';
 import { setPageNum } from '../../slice/countrySlice';
+import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 
 const Pagination = () => {
   const { filteredData } = useSelector((state: RootState) => state.country);
 
-  // const [currentPageNum, setCurrentPageNum] = useState<number>(1);
   const dispatch = useDispatch<AppDispatch>();
 
   const { currentPageNum } = useSelector((state: RootState) => state.country);
@@ -18,20 +18,14 @@ const Pagination = () => {
   const prevButtonHandler = () => {
     if (currentPageNum > 1) {
       dispatch(setPageNum(currentPageNum - 1));
-      // setCurrentPageNum(currentPageNum - 1);
     }
   };
 
   const nextButtonHandler = () => {
     if (currentPageNum < numOfPages) {
       dispatch(setPageNum(currentPageNum + 1));
-      // setCurrentPageNum(currentPageNum + 1);
     }
   };
-
-  // const setPageNum = (num: number) => {
-  //   setCurrentPageNum(num);
-  // };
 
   const generatePageNum = (): number[] => {
     const pageNumbers: number[] = [];
@@ -62,51 +56,30 @@ const Pagination = () => {
         onClick={prevButtonHandler}
         className={styles['btn']}
       >
+        <IoIosArrowBack />
         Prev
       </button>
-      {generatePageNum().map((num) => (
-        <button
-          key={num}
-          onClick={() => dispatch(setPageNum(num))}
-          className={num === currentPageNum ? styles['active'] : ''}
-        >
-          {num}
-        </button>
-      ))}
+      <div className={styles['numBtn-container']}>
+        {generatePageNum().map((num) => (
+          <button
+            key={num}
+            onClick={() => dispatch(setPageNum(num))}
+            className={`${styles['num-btn']} ${
+              num === currentPageNum ? styles['active'] : ''
+            }`}
+          >
+            {num}
+          </button>
+        ))}
+      </div>
 
-      {/* {currentPageNum <= 2 ? (
-        <>
-          <button onClick={() => setCurrentPageNum(1)}>1</button>
-          <button onClick={() => setCurrentPageNum(2)}>2</button>
-          <button onClick={() => setCurrentPageNum(3)}>3</button>
-          <button onClick={() => setCurrentPageNum(4)}>4 </button>
-          <button onClick={() => setCurrentPageNum(5)}>5</button>
-        </>
-      ) : (
-        <>
-          <button onClick={() => setCurrentPageNum(currentPageNum - 2)}>
-            {currentPageNum - 2}
-          </button>
-          <button onClick={() => setCurrentPageNum(currentPageNum - 1)}>
-            {currentPageNum - 1}
-          </button>
-          <button onClick={() => setCurrentPageNum(currentPageNum)}>
-            {currentPageNum}
-          </button>
-          <button onClick={() => setCurrentPageNum(currentPageNum + 1)}>
-            {currentPageNum + 1}{' '}
-          </button>
-          <button onClick={() => setCurrentPageNum(currentPageNum + 2)}>
-            {currentPageNum + 2}
-          </button>
-        </>
-      )} */}
       <button
         disabled={currentPageNum === numOfPages}
         onClick={nextButtonHandler}
         className={styles['btn']}
       >
         Next
+        <IoIosArrowForward />
       </button>
     </div>
   );

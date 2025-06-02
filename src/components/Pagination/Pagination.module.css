@@ -1,6 +1,5 @@
 .btn-container {
   display: flex;
-  border: 2px solid orange;
   gap: 1rem;
   justify-content: center;
 }
@@ -11,12 +10,49 @@
   line-height: 20px;
   outline: none;
   border: none;
-
-  /* color: white; */
+  display: flex;
   cursor: pointer;
   background-color: inherit;
+  color: var(--clr-text);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.btn:disabled {
+  color: gray;
+  cursor: not-allowed;
+}
+.numBtn-container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.num-btn {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: inherit;
+  color: var(--clr-text);
+  font-size: 0.75rem;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  flex: 1 1 2.5rem;
+  max-width: 2.5rem;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .active {
-  background-color: red;
+  background-color: var(--clr-background-btn);
+  border: none;
+  outline: none;
+  font-weight: bold;
+  box-shadow: var(--box-shadow-header);
 }
