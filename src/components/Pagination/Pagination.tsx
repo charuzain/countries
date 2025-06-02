@@ -50,38 +50,42 @@ const Pagination = () => {
   };
 
   return (
-    <div className={styles['btn-container']}>
-      <button
-        disabled={currentPageNum === 1}
-        onClick={prevButtonHandler}
-        className={styles['btn']}
-      >
-        <IoIosArrowBack />
-        Prev
-      </button>
-      <div className={styles['numBtn-container']}>
-        {generatePageNum().map((num) => (
+    <>
+      {numOfPages > 1 && (
+        <div className={styles['btn-container']}>
           <button
-            key={num}
-            onClick={() => dispatch(setPageNum(num))}
-            className={`${styles['num-btn']} ${
-              num === currentPageNum ? styles['active'] : ''
-            }`}
+            disabled={currentPageNum === 1}
+            onClick={prevButtonHandler}
+            className={styles['btn']}
           >
-            {num}
+            <IoIosArrowBack />
+            Prev
           </button>
-        ))}
-      </div>
+          <div className={styles['numBtn-container']}>
+            {generatePageNum().map((num) => (
+              <button
+                key={num}
+                onClick={() => dispatch(setPageNum(num))}
+                className={`${styles['num-btn']} ${
+                  num === currentPageNum ? styles['active'] : ''
+                }`}
+              >
+                {num}
+              </button>
+            ))}
+          </div>
 
-      <button
-        disabled={currentPageNum === numOfPages}
-        onClick={nextButtonHandler}
-        className={styles['btn']}
-      >
-        Next
-        <IoIosArrowForward />
-      </button>
-    </div>
+          <button
+            disabled={currentPageNum === numOfPages}
+            onClick={nextButtonHandler}
+            className={styles['btn']}
+          >
+            Next
+            <IoIosArrowForward />
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 

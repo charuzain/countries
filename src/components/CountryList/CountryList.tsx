@@ -18,9 +18,6 @@ const CountryList = () => {
     return <h1>There was an error loading this page....</h1>;
   }
 
-  console.log(`country list rendered`)
-  console.log(filteredData.length);
-  console.log(currentPageNum)
 
   const countriesCurrentPage = (pageNum: number): Country[] => {
     const startIndex = (pageNum - 1) * 20;

@@ -15,7 +15,6 @@ const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { status, data } = useSelector((state: RootState) => state.country);
-  console.log(`status is ${status}`);
 
   useEffect(() => {
     if (status === 'idle' && data.length === 0) {
