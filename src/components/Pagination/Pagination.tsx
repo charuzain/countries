@@ -1,31 +1,37 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../app/store';
-import { useState } from 'react';
 import styles from './Pagination.module.css';
+import type { AppDispatch } from '../../app/store';
+import { setPageNum } from '../../slice/countrySlice';
 
 const Pagination = () => {
   const { filteredData } = useSelector((state: RootState) => state.country);
 
-  const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+  // const [currentPageNum, setCurrentPageNum] = useState<number>(1);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { currentPageNum } = useSelector((state: RootState) => state.country);
 
   const numCountries = filteredData.length;
   const numOfPages = Math.ceil(numCountries / 20);
 
   const prevButtonHandler = () => {
     if (currentPageNum > 1) {
-      setCurrentPageNum(currentPageNum - 1);
+      dispatch(setPageNum(currentPageNum - 1));
+      // setCurrentPageNum(currentPageNum - 1);
     }
   };
 
   const nextButtonHandler = () => {
     if (currentPageNum < numOfPages) {
-      setCurrentPageNum(currentPageNum + 1);
+      dispatch(setPageNum(currentPageNum + 1));
+      // setCurrentPageNum(currentPageNum + 1);
     }
   };
 
-  const setPageNum = (num: number) => {
-    setCurrentPageNum(num);
-  };
+  // const setPageNum = (num: number) => {
+  //   setCurrentPageNum(num);
+  // };
 
   const generatePageNum = (): number[] => {
     const pageNumbers: number[] = [];
@@ -61,7 +67,7 @@ const Pagination = () => {
       {generatePageNum().map((num) => (
         <button
           key={num}
-          onClick={() => setPageNum(num)}
+          onClick={() => dispatch(setPageNum(num))}
           className={num === currentPageNum ? styles['active'] : ''}
         >
           {num}

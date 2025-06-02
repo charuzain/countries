@@ -2,11 +2,14 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../../app/store';
 import CountryCard from '../CountryCard/CountryCard';
 import styles from './CountryList.module.css';
+import type { Country } from '../../slice/countrySlice';
 
 const CountryList = () => {
-  const { filteredData: data, status } = useSelector(
-    (state: RootState) => state.country
-  );
+  const {
+    filteredData: data,
+    status,
+    currentPageNum,
+  } = useSelector((state: RootState) => state.country);
 
   if (status === 'loading') {
     return <h1>Loading....</h1>;
@@ -15,21 +18,22 @@ const CountryList = () => {
     return <h1>There was an error loading this page....</h1>;
   }
 
-  let pageNum = 3;
+  console.log(data)
+  console.log(currentPageNum)
 
-  const startIndex = (pageNum - 1) * 20;
-  const endIndex = pageNum * 20 - 1;
-  // console.log(startIndex)
-  // console.log(endIndex)
-
-  const elem = data.slice(startIndex, endIndex+1);
+  const countriesCurrentPage = (pageNum: number): Country[] => {
+    const startIndex = (pageNum - 1) * 20;
+    const endIndex = pageNum * 20 - 1;
+    const elem = data.slice(startIndex, endIndex + 1);
+    return elem;
+  };
 
   if (data.length === 0) {
     return <h2>No countries found.</h2>;
   }
   return (
     <ul className={styles['country-list']}>
-      {elem.map((country) => (
+      {countriesCurrentPage(currentPageNum).map((country) => (
         <CountryCard
           key={country.name}
           name={country.name}

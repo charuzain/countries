@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { act } from 'react';
 
 type Status = 'idle' | 'loading' | 'error';
 export type Country = {
@@ -53,6 +52,7 @@ export interface CountryState {
   selectedFilter: string;
   searchTerm: string;
   sortBy: string;
+  currentPageNum: number;
 }
 
 const initialState: CountryState = {
@@ -64,6 +64,7 @@ const initialState: CountryState = {
   selectedFilter: 'all',
   searchTerm: '',
   sortBy: '',
+  currentPageNum: 1,
 };
 
 // helper
@@ -74,6 +75,7 @@ const countrySlice = createSlice({
   reducers: {
     filterCountries: (state, action: PayloadAction<string>) => {
       state.selectedFilter = action.payload.toLowerCase();
+      state.currentPageNum = 1;
 
       state.filteredData = state.data
         .filter((country) =>
@@ -110,6 +112,8 @@ const countrySlice = createSlice({
 
     searchCountries: (state, action: PayloadAction<string>) => {
       state.searchTerm = action.payload.toLowerCase();
+      state.currentPageNum = 1;
+
       state.filteredData = state.data
         .filter((country) =>
           state.searchTerm
@@ -163,6 +167,10 @@ const countrySlice = createSlice({
           (a, b) => a.population - b.population
         );
       }
+    },
+
+    setPageNum: (state, action: PayloadAction<number>) => {
+      state.currentPageNum = action.payload;
     },
   },
 
@@ -220,27 +228,28 @@ export const fetchCountries = createAsyncThunk<Country[]>(
   }
 );
 
-export const fetchCountryByName = createAsyncThunk(
-  'countryByName',
-  async (name: string, { rejectWithValue }) => {
-    try {
-      const response = await fetch(
-        `https://restcountries.com/v3.1/name/${name}?fullText=true`
-      );
-      if (!response.ok) {
-        return rejectWithValue(`Country "${name}" not found`);
-        // this tells Redux Toolkit to dispatch the rejected action with error message as the payload.
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.log(error);
-      return rejectWithValue('Something went wrong');
+export const fetchCountryByName = createAsyncThunk<
+  CountryDetail[],
+  string,
+  { rejectValue: string }
+>('countryByName', async (name: string, { rejectWithValue }) => {
+  try {
+    const response = await fetch(
+      `https://restcountries.com/v3.1/name/${name}?fullText=true`
+    );
+    if (!response.ok) {
+      return rejectWithValue(`Country "${name}" not found`);
+      // this tells Redux Toolkit to dispatch the rejected action with error message as the payload.
     }
-  }
-);
 
-export const { filterCountries, searchCountries, sortCountries } =
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return rejectWithValue('Something went wrong');
+  }
+});
+
+export const { filterCountries, searchCountries, sortCountries, setPageNum } =
   countrySlice.actions;
 export default countrySlice.reducer;
