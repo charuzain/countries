@@ -14,11 +14,16 @@ import Pagination from '../components/Pagination/Pagination';
 const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { status } = useSelector((state: RootState) => state.country);
+  const { status, data } = useSelector((state: RootState) => state.country);
+  console.log(`status is ${status}`);
 
   useEffect(() => {
-    dispatch(fetchCountries());
-  }, [dispatch]);
+    if (status === 'idle' && data.length === 0) {
+      dispatch(fetchCountries());
+    } else if (status === 'error') {
+      dispatch(fetchCountries());
+    }
+  }, [dispatch, status, data.length]);
 
   if (status === 'loading') {
     return <h1>Loading...</h1>;
@@ -31,8 +36,10 @@ const HomePage = () => {
     <main className={styles['main']}>
       <div className={styles['filter-container']}>
         <SearchBar />
-        <Filter />
-        <Sort />
+        <div className={styles['filter-box']}>
+          <Filter />
+          <Sort />
+        </div>
       </div>
       <CountryList />
       <Pagination />

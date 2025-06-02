@@ -31,6 +31,7 @@ const CountryDetail = () => {
 
   useEffect(() => {
     if (name) {
+      console.log(`county=======`)
       dispatch(fetchCountryByName(name));
     }
 

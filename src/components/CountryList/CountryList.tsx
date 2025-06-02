@@ -6,7 +6,7 @@ import type { Country } from '../../slice/countrySlice';
 
 const CountryList = () => {
   const {
-    filteredData: data,
+    filteredData,
     status,
     currentPageNum,
   } = useSelector((state: RootState) => state.country);
@@ -18,17 +18,18 @@ const CountryList = () => {
     return <h1>There was an error loading this page....</h1>;
   }
 
-  console.log(data)
+  console.log(`country list rendered`)
+  console.log(filteredData.length);
   console.log(currentPageNum)
 
   const countriesCurrentPage = (pageNum: number): Country[] => {
     const startIndex = (pageNum - 1) * 20;
     const endIndex = pageNum * 20 - 1;
-    const elem = data.slice(startIndex, endIndex + 1);
+    const elem = filteredData.slice(startIndex, endIndex + 1);
     return elem;
   };
 
-  if (data.length === 0) {
+  if (filteredData.length === 0) {
     return <h2>No countries found.</h2>;
   }
   return (

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MdOutlineKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
-import { useDispatch } from 'react-redux';
-// import type { RootState, AppDispatch } from '../../app/store';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../app/store';
 import { sortCountries } from '../../slice/countrySlice';
 import styles from './Sort.module.css';
 
@@ -12,11 +12,14 @@ const sortOptions = {
   'name-desc': 'Country Name (Z-A)',
 };
 
-type SortOptionKey = 'pop-desc' | 'pop-asc' | 'name-asc' | 'name-desc';
+type SortOptionKey = 'pop-desc' | 'pop-asc' | 'name-asc' | 'name-desc' | '';
+
 
 const Sort = () => {
+  const selectedSortBy = useSelector(
+    (state: RootState) => state.country.sortBy
+  );
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectedSortBy, setSelectedSortBy] = useState<SortOptionKey | ''>('');
 
   const dispatch = useDispatch();
 
@@ -25,7 +28,7 @@ const Sort = () => {
   };
 
   const handleSort = (val: SortOptionKey) => {
-    setSelectedSortBy(val);
+    // setSelectedSortBy(val);
     dispatch(sortCountries(val));
     setShowDropDown(!showDropDown);
   };
@@ -44,10 +47,30 @@ const Sort = () => {
       </button>
       {showDropDown && (
         <ul className={styles['filter-list']}>
-          <li onClick={() => handleSort('pop-desc')}>Population (desc)</li>
-          <li onClick={() => handleSort('pop-asc')}>Population (asc)</li>
-          <li onClick={() => handleSort('name-asc')}>Contry Name (a-z)</li>
-          <li onClick={() => handleSort('name-desc')}>Contry Name (z-a)</li>
+          <li
+            onClick={() => handleSort('pop-desc')}
+            className={styles['filter-item']}
+          >
+            Population (desc)
+          </li>
+          <li
+            onClick={() => handleSort('pop-asc')}
+            className={styles['filter-item']}
+          >
+            Population (asc)
+          </li>
+          <li
+            onClick={() => handleSort('name-asc')}
+            className={styles['filter-item']}
+          >
+            Country Name (a-z)
+          </li>
+          <li
+            onClick={() => handleSort('name-desc')}
+            className={styles['filter-item']}
+          >
+            Country Name (z-a)
+          </li>
         </ul>
       )}
     </div>

@@ -1,31 +1,46 @@
 import { useState } from 'react';
 import { MdOutlineKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import styles from './Filter.module.css';
-import { useDispatch } from 'react-redux';
-// import type { RootState, AppDispatch } from '../../app/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { filterCountries } from '../../slice/countrySlice';
-
+import type { RootState } from '../../app/store';
 const Filter = () => {
   const [selectFilter, setSelectFilter] = useState<boolean>(false);
 
-  const [filter, setfilter] = useState<string>('');
+  const { selectedFilter } = useSelector((state: RootState) => state.country);
 
   const dispatch = useDispatch();
-  //  const dispatch = useDispatch<AppDispatch>();
 
   const filterClickHandler = () => {
     setSelectFilter(!selectFilter);
   };
 
   const filterSelectHandler = (value: string) => {
-    setfilter(value);
-    setSelectFilter(!selectFilter);
-    dispatch(filterCountries(value))
+    dispatch(filterCountries(value));
+    setSelectFilter(false);
   };
+
+  const regions = [
+    'Africa',
+    'Americas',
+    'Asia',
+    'Antarctic',
+    'Oceania',
+    'Europe',
+  ];
+  const displayFilterText = (filter: string) =>
+    !filter || filter.toLowerCase() === 'all' ? 'Filter By Region' : `${filter[0].toUpperCase()}${filter.slice(1)}`;
+
+
+  const dropdownItems =
+    !selectedFilter || selectedFilter.toLowerCase() === 'all'
+      ? regions 
+      : ['All', ...regions]; 
+
   return (
     <div className={styles['filter-container']}>
       <button onClick={filterClickHandler} className={styles['filter-btn']}>
-        <span>{!filter ? 'Filter By Region' : filter}</span>
+        <span>{displayFilterText(selectedFilter)}</span>
         <i>
           {selectFilter ? (
             <MdKeyboardArrowUp />
@@ -34,15 +49,18 @@ const Filter = () => {
           )}
         </i>
       </button>
+
       {selectFilter && (
         <ul className={styles['filter-list']}>
-          <li onClick={() => filterSelectHandler('All')}>All</li>
-          <li onClick={() => filterSelectHandler('Africa')}>Africa</li>
-          <li onClick={() => filterSelectHandler('Americas')}>Americas</li>
-          <li onClick={() => filterSelectHandler('Asia')}>Asia</li>
-          <li onClick={() => filterSelectHandler('Antarctic')}>Antarctic</li>
-          <li onClick={() => filterSelectHandler('Oceania')}>Oceania</li>
-          <li onClick={() => filterSelectHandler('Europe')}>Europe</li>
+          {dropdownItems.map((region) => (
+            <li
+              key={region}
+              onClick={() => filterSelectHandler(region)}
+              className={styles['filter-item']}
+            >
+              {region}
+            </li>
+          ))}
         </ul>
       )}
     </div>

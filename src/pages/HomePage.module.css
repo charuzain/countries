@@ -5,9 +5,11 @@
   flex-direction: column;
   max-width: 26.5625rem;
 }
-/* .filter-container {
-  border: 2px solid purple;
-} */
+
+.filter-box {
+  /* border: 2px solid red; */
+  display: flex;
+}
 
 @media only screen and (min-width: 768px) {
   .main {

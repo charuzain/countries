@@ -28,6 +28,7 @@ export type Native = {
 export type NativeName = {
   [languageCode: string]: Native;
 };
+type SortOptionKey = 'pop-desc' | 'pop-asc' | 'name-asc' | 'name-desc' | '';
 
 export type CountryDetail = {
   name: { common: string; nativeName: NativeName };
@@ -51,7 +52,7 @@ export interface CountryState {
   error: string | null;
   selectedFilter: string;
   searchTerm: string;
-  sortBy: string;
+  sortBy: SortOptionKey;
   currentPageNum: number;
 }
 
@@ -66,6 +67,8 @@ const initialState: CountryState = {
   sortBy: '',
   currentPageNum: 1,
 };
+
+
 
 // helper
 
@@ -147,7 +150,7 @@ const countrySlice = createSlice({
       }
     },
 
-    sortCountries: (state, action: PayloadAction<string>) => {
+    sortCountries: (state, action: PayloadAction<SortOptionKey>) => {
       const countriesData = [...state.filteredData];
       state.sortBy = action.payload;
       if (action.payload === 'name-asc') {
@@ -213,7 +216,7 @@ export const fetchCountries = createAsyncThunk<Country[]>(
   async () => {
     const res = await fetch('https://restcountries.com/v3.1/all');
     const data = await res.json();
-    // console.log(data);
+
     const countryData: Country[] = data.map(
       (country: any): Country => ({
         name: country.name.common,

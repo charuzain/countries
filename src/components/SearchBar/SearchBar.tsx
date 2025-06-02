@@ -1,25 +1,31 @@
 import { FaSearch } from 'react-icons/fa';
 import styles from '../SearchBar/SearchBar.module.css';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { searchCountries } from '../../slice/countrySlice';
+import type { RootState } from '../../app/store';
 
 const SearchBar = () => {
-  const [search, setSearch] = useState<string>('');
+  const { status, searchTerm } = useSelector(
+    (state: RootState) => state.country
+  );
+  const [search, setSearch] = useState<string>(searchTerm);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setSearch(searchTerm);
+  }, [searchTerm]);
 
   useEffect(() => {
     const delay = setTimeout(() => {
       dispatch(searchCountries(search));
     }, 400);
-
     return () => clearTimeout(delay);
-  }, [search, dispatch]);
+  }, [search, dispatch, status]);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    // dispatch(searchCountries(e.target.value));
   };
 
   return (
@@ -30,6 +36,7 @@ const SearchBar = () => {
         className={styles['search-input']}
         onChange={onChangeHandler}
         value={search}
+        type='search'
       />
     </div>
   );

@@ -25,10 +25,8 @@ const Header = () => {
         <Link to={'/'} className={styles['header-title']}>
           Where in the world ?
         </Link>
-        <div className={styles['theme-container']}>
-          <div onClick={themeHandler}>
-            {mode === 'light' ? <FaMoon /> : <FaRegMoon />}
-          </div>
+        <div className={styles['theme-container']} onClick={themeHandler}>
+          <div>{mode === 'light' ? <FaMoon /> : <FaRegMoon />}</div>
           <span className={styles['theme']}>
             {mode === 'light' ? 'Dark Mode' : 'Light Mode'}
           </span>
